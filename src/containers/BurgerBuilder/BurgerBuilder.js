@@ -1,6 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import Modal from '../../components/UI/Modal/Modal';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -10,21 +12,46 @@ const INGREDIENT_PRICES = {
 };
 
 class BurgerBuilder extends Component {
-    state ={
+    state = {
         ingredients: {
             salad: 0,
             bacon: 0,
             cheese: 0,
             meat: 0
         },
-        totalPrice: 5
+        totalPrice: 5,
+        purchasable: false,
+        orderPlaced: false
+    }
+
+    placeOrderHandler = () => {
+        this.setState({orderPlaced: true});
+    }
+
+    setPurchasableHandler = (ingredientsAvailable) => {
+        const totalIngredientsAdded = Object.keys(ingredientsAvailable)
+            .map(
+                (ingredientKey) => {
+                    return ingredientsAvailable[ingredientKey];
+                }
+            )
+            .reduce(
+                (sum, currentValue) => {
+                    return sum + currentValue;
+                },
+                0
+            );
+
+        this.setState({
+            purchasable: totalIngredientsAdded > 0
+        });
     }
 
     addIngredientHandler = (type) => {
         // update the ingredient count first for the added ingredient
         const oldIngredientCount = this.state.ingredients[type];
         const updatedIngredientCount = oldIngredientCount + 1;
-        const updatedIngredients = {...this.state.ingredients};
+        const updatedIngredients = { ...this.state.ingredients };
         updatedIngredients[type] = updatedIngredientCount;
 
         // then add the additional price for this ingredient in total price of burger
@@ -37,6 +64,8 @@ class BurgerBuilder extends Component {
                 totalPrice: prevState.totalPrice + additionalPrice
             };
         });
+
+        this.setPurchasableHandler(updatedIngredients);
     }
 
     removeIngredientHandler = (type) => {
@@ -46,7 +75,7 @@ class BurgerBuilder extends Component {
             return;
         }
         const updatedIngredientCount = oldIngredientCount - 1;
-        const updatedIngredients = {...this.state.ingredients};
+        const updatedIngredients = { ...this.state.ingredients };
         updatedIngredients[type] = updatedIngredientCount;
 
         // then add the additional price for this ingredient in total price of burger
@@ -59,22 +88,29 @@ class BurgerBuilder extends Component {
                 totalPrice: prevState.totalPrice - priceReduced
             };
         });
+
+        this.setPurchasableHandler(updatedIngredients);
     }
 
     render() {
-        const disabledInfo = {...this.state.ingredients};
+        const disabledInfo = { ...this.state.ingredients };
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
 
         return (
             <React.Fragment>
-                <Burger ingredients={this.state.ingredients}/>
+                <Modal show={this.state.orderPlaced}>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
+                <Burger ingredients={this.state.ingredients} />
                 <BuildControls
                     price={this.state.totalPrice}
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
-                    disabled={disabledInfo} />
+                    disabled={disabledInfo}
+                    purchasable={this.state.purchasable}
+                    orderNow={this.placeOrderHandler} />
             </React.Fragment>
         );
     }
