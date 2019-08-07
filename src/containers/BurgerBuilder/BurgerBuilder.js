@@ -25,11 +25,16 @@ class BurgerBuilder extends Component {
     }
 
     placeOrderHandler = () => {
-        this.setState({orderPlaced: true});
+        this.setState({ orderPlaced: true });
     }
 
     cancelOrderHandler = () => {
-        this.setState({orderPlaced: false});
+        this.setState({ orderPlaced: false });
+    }
+
+    continueOrderHandler = () => {
+        alert('You continued a purchase!');
+        this.setState({ orderPlaced: false });
     }
 
     setPurchasableHandler = (ingredientsAvailable) => {
@@ -105,7 +110,11 @@ class BurgerBuilder extends Component {
         return (
             <React.Fragment>
                 <Modal show={this.state.orderPlaced} cancelOrder={this.cancelOrderHandler}>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                    <OrderSummary
+                        ingredients={this.state.ingredients}
+                        price={this.state.totalPrice}
+                        cancelOrder={this.cancelOrderHandler}
+                        continueOrder={this.continueOrderHandler} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
