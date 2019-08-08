@@ -67,7 +67,7 @@ class BurgerBuilder extends Component {
         const additionalPrice = INGREDIENT_PRICES[type];
 
         // finally update the original state to reflect changes
-        this.setState((prevState, currentProps) => {
+        this.setState((prevState) => {
             return {
                 ingredients: updatedIngredients,
                 totalPrice: prevState.totalPrice + additionalPrice
@@ -91,7 +91,7 @@ class BurgerBuilder extends Component {
         const priceReduced = INGREDIENT_PRICES[type];
 
         // finally update the original state to reflect changes
-        this.setState((prevState, currentProps) => {
+        this.setState((prevState) => {
             return {
                 ingredients: updatedIngredients,
                 totalPrice: prevState.totalPrice - priceReduced
