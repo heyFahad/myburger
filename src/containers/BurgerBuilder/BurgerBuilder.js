@@ -33,6 +33,7 @@ class BurgerBuilder extends Component {
     }
 
     continueOrderHandler = () => {
+        // TODO: properly handle the checkout process and send the purchasing data to a real server
         alert('You continued a purchase!');
         this.setState({ orderPlaced: false });
     }
