@@ -3,30 +3,13 @@ import Modal from '../../components/UI/Modal/Modal';
 
 const withAxiosErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
-        state = {
-            error: null
-        }
-
-        errorConfirmedHandler = () => {
-            this.setState({
+        constructor(props) {
+            super(props);
+            this.state = {
                 error: null
-            });
-        }
+            }
 
-        render() {
-            return (
-                <React.Fragment>
-                    <Modal
-                        show={this.state.error}
-                        clicked={this.errorConfirmedHandler}>
-                        {this.state.error ? this.state.error.message : null}
-                    </Modal>
-                    <WrappedComponent {...this.props} />
-                </React.Fragment>
-            );
-        }
-
-        componentDidMount() {
+            // setup axios interceptors to catch HttpRequest errors globally
             axios.interceptors.request.use(
                 request => {
                     this.setState({
@@ -47,7 +30,27 @@ const withAxiosErrorHandler = (WrappedComponent, axios) => {
                         error: error
                     });
                     return Promise.reject(error);
-                });
+                }
+            );
+        }
+
+        errorConfirmedHandler = () => {
+            this.setState({
+                error: null
+            });
+        }
+
+        render() {
+            return (
+                <React.Fragment>
+                    <Modal
+                        show={this.state.error}
+                        clicked={this.errorConfirmedHandler}>
+                        {this.state.error ? this.state.error.message : null}
+                    </Modal>
+                    <WrappedComponent {...this.props} />
+                </React.Fragment>
+            );
         }
     }
 }
