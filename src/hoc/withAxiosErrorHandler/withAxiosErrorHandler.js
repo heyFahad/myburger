@@ -10,7 +10,7 @@ const withAxiosErrorHandler = (WrappedComponent, axios) => {
             }
 
             // setup axios interceptors to catch HttpRequest errors globally
-            axios.interceptors.request.use(
+            this.reqInterceptor = axios.interceptors.request.use(
                 request => {
                     this.setState({
                         error: null
@@ -22,7 +22,7 @@ const withAxiosErrorHandler = (WrappedComponent, axios) => {
                     return Promise.reject(error);
                 }
             );
-            axios.interceptors.response.use(
+            this.resInterceptor = axios.interceptors.response.use(
                 response => response,
                 error => {
                     console.log(error);
@@ -51,6 +51,11 @@ const withAxiosErrorHandler = (WrappedComponent, axios) => {
                     <WrappedComponent {...this.props} />
                 </React.Fragment>
             );
+        }
+
+        componentWillUnmount() {
+            axios.interceptors.request.eject(this.reqInterceptor);
+            axios.interceptors.response.eject(this.resInterceptor);
         }
     }
 }
