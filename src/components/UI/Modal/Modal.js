@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Backdrop from '../Backdrop/Backdrop';
 import cssClasses from './Modal.css';
 
 class Modal extends Component {
     shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.show !== this.props.show;
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
     }
 
     render() {
         return (
             <React.Fragment>
-                <Backdrop show={this.props.show} backdropClicked={this.props.cancelOrder} />
+                <Backdrop show={this.props.show} backdropClicked={this.props.clicked} />
                 <div
                     className={cssClasses.Modal}
                     style={{

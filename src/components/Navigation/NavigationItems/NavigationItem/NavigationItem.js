@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import cssClasses from './NavigationItem.css';
 
 const NavigationItem = (props) => {

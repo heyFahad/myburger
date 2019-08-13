@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import BuildControl from './BuildControl/BuildControl';
 import cssClasses from './BuildControls.css';
 

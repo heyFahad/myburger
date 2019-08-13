@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import cssClasses from './Logo.css';
 import burgerLogo from '../../assets/images/burger-logo.png';
 

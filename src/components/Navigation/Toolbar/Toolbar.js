@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Logo from '../../Logo/Logo';
 import cssClasses from './Toolbar.css';
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
