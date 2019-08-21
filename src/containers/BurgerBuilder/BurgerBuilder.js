@@ -33,7 +33,7 @@ class BurgerBuilder extends Component {
     }
 
     continueOrderHandler = () => {
-        this.setState({ loading: true });
+        /* this.setState({ loading: true });
 
         const order = {
             ingredients: { ...this.state.ingredients },
@@ -73,7 +73,8 @@ class BurgerBuilder extends Component {
                     loading: false
                 });
                 console.log(error);
-            });
+            }); */
+            this.props.history.push("/checkout");
     }
 
     setPurchasableHandler = (ingredientsAvailable) => {
