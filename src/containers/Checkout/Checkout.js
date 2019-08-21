@@ -29,6 +29,18 @@ class Checkout extends Component {
             </div>
         );
     }
+
+    componentDidMount() {
+        const query = new URLSearchParams(this.props.location.search);
+        const receivedIngredients = {};
+        for(let param of query.entries()) {
+            // ['salad', '1']
+            receivedIngredients[param[0]] = +param[1];
+        }
+        this.setState({
+            ingredients: receivedIngredients
+        })
+    }
 }
 
 export default Checkout;
