@@ -5,11 +5,11 @@ import cssClasses from './NavigationItems.css';
 const NavigationItems = (props) => {
     return (
         <ul className={cssClasses.NavigationItems}>
-            <NavigationItem link="/" active>
+            <NavigationItem link="/" exact>
                 Burger Builder
             </NavigationItem>
-            <NavigationItem link="/">
-                Checkout
+            <NavigationItem link="/orders">
+                My Orders
             </NavigationItem>
         </ul>
     );
