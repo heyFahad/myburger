@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import cssClasses from './ContactData.css';
 import Loader from '../../../components/UI/Loader/Loader';
@@ -51,10 +52,10 @@ class ContactData extends Component {
     render() {
         let form = (
             <form>
-                <input type="text" name="name" placeholder="Your Name" />
-                <input type="email" name="email" placeholder="Your Mail" />
-                <input type="text" name="street" placeholder="Street" />
-                <input type="text" name="postalCode" placeholder="Postal Code" />
+                <Input inputtype="input" type="text" name="name" placeholder="Your Name" />
+                <Input inputtype="input" type="email" name="email" placeholder="Your Mail" />
+                <Input inputtype="input" type="text" name="street" placeholder="Street" />
+                <Input inputtype="input" type="text" name="postalCode" placeholder="Postal Code" />
                 <Button btnType="Success" btnClicked={this.orderHandler}>OREDR NOW</Button>
             </form>
         );
