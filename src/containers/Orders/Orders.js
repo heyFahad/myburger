@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from '../../axios-orders';
 import Order from '../../components/Order/Order';
+import Loader from '../../components/UI/Loader/Loader';
 import withAxiosErrorHandler from '../../hoc/withAxiosErrorHandler/withAxiosErrorHandler';
 
 class Orders extends Component {
@@ -13,6 +14,7 @@ class Orders extends Component {
         return (
             <div>
                 {
+                    this.state.loading ? <Loader /> :
                     this.state.orders.map(order => {
                         return <Order
                             key={order.pushId}
