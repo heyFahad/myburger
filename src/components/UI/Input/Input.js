@@ -3,15 +3,25 @@ import cssClasses from './Input.css';
 
 const Input = (props) => {
     let inputElement = null;
-    switch (props.inputtype) {
+    switch (props.elementType) {
         case ('input'):
-            inputElement = <input className={cssClasses.InputElement} {...props} />;
+            inputElement = (
+                <input
+                    className={cssClasses.InputElement}
+                    {...props.elementConfig}
+                    value={props.value} />
+            );
             break;
 
         case ('textarea'):
-            inputElement = <textarea className={cssClasses.InputElement} {...props} />;
+            inputElement = (
+                <textarea
+                    className={cssClasses.InputElement}
+                    {...props.elementConfig}
+                    value={props.value} />
+            );
             break;
-    
+
         default:
             break;
     }
