@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import cssClasses from './ContactData.css';
 import Loader from '../../../components/UI/Loader/Loader';
 import axios from '../../../axios-orders';
+import * as actionTypes from '../../../redux-store/actions';
 
 class ContactData extends Component {
     state = {
@@ -140,13 +143,14 @@ class ContactData extends Component {
         }
 
         const order = {
-            ingredients: { ...this.props.ingredients },
+            ingredients: { ...this.props.ings },
             price: this.props.price.toFixed(2),
             customerData: formData
         };
 
         axios.post('/orders.json', order)
             .then(response => {
+                this.props.resetStateHandler();
                 this.setState({
                     loading: false
                 });
@@ -201,4 +205,17 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        resetStateHandler: () => dispatch({type: actionTypes.RESET_STATE})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
