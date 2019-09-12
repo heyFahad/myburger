@@ -6,7 +6,7 @@ import Button from '../../../components/UI/Button/Button';
 import cssClasses from './ContactData.css';
 import Loader from '../../../components/UI/Loader/Loader';
 import axios from '../../../axios-orders';
-import * as actionTypes from '../../../redux-store/actions';
+import * as actionTypes from '../../../redux-store/actions/actionTypes';
 
 class ContactData extends Component {
     state = {
