@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import Burger from '../../Burger/Burger';
 import Button from '../../UI/Button/Button';
@@ -10,7 +9,7 @@ const CheckoutSummary = (props) => {
         <div className={cssClasses.CheckoutSummary}>
             <h1>We hope this tastes well!</h1>
             <div style={{ width: '100%', margin: 'auto' }}>
-                <Burger ingredients={props.ings} />
+                <Burger ingredients={props.ingredients} />
             </div>
             <Button
                 btnType="Danger"
@@ -26,10 +25,4 @@ const CheckoutSummary = (props) => {
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        ings: state.ingredients
-    };
-}
-
-export default connect(mapStateToProps)(CheckoutSummary);
+export default CheckoutSummary;
