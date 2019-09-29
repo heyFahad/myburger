@@ -41,3 +41,45 @@ export const purchaseInit = () => {
         type: actionTypes.PURCHASE_INIT
     };
 };
+
+const fetchOrdersStart = () => {
+    return {
+        type: actionTypes.FETCH_ORDERS_START
+    };
+};
+
+const fetchOrdersSuccess = (orders) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_SUCCESS,
+        orders: orders
+    };
+};
+
+const fetchOrdersFailed = (error) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_FAILED,
+        error: error
+    };
+};
+
+export const fecthOrders = () => {
+    return (dispatch) => {
+        dispatch(fetchOrdersStart());
+        axios.get('/orders.json')
+            .then(response => {
+                const fetchedOrders = [];
+                for (let key in response.data) {
+                    fetchedOrders.push({
+                        pushId: key,
+                        ...response.data[key]
+                    });
+                }
+                // Reverse the order of array just to display the latest orders on the top
+                fetchedOrders.reverse();
+                dispatch(fetchOrdersSuccess(fetchedOrders));
+            })
+            .catch(error => {
+                dispatch(fetchOrdersFailed(error));
+            });
+    };
+};
