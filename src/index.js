@@ -8,11 +8,13 @@ import './index.css';
 import App from './App';
 import burgerBuilderReducer from './redux-store/reducers/burgerBuilder';
 import orderReducer from './redux-store/reducers/order';
+import authReducer from "./redux-store/reducers/auth";
 import * as serviceWorker from './serviceWorker';
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
-    order: orderReducer
+    order: orderReducer,
+    auth: authReducer
 });
 
 // @ts-ignore
