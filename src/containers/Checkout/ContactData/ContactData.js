@@ -7,7 +7,7 @@ import cssClasses from './ContactData.css';
 import Loader from '../../../components/UI/Loader/Loader';
 import axios from '../../../axios-orders';
 import withAxiosErrorHandler from '../../../hoc/withAxiosErrorHandler/withAxiosErrorHandler';
-import { updateObject } from "../../../shared/utility";
+import { updateObject, checkValidity } from "../../../shared/utility";
 import * as actionCreators from '../../../redux-store/actions/actionCreators';
 
 class ContactData extends Component {
@@ -101,7 +101,7 @@ class ContactData extends Component {
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedOrderElement = updateObject(this.state.orderForm[inputIdentifier], {
             value: event.target.value,
-            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
             touched: true
         });
         const updatedOrderForm = updateObject(this.state.orderForm, {
@@ -117,34 +117,6 @@ class ContactData extends Component {
             orderForm: updatedOrderForm,
             formIsValid: isFormValid
         });
-    }
-
-    checkValidity = (value, rules) => {
-        let isValid = true;
-
-        if (!rules) {
-            return true;
-        }
-
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-        if (rules.minLength) {
-            isValid = value.trim().length >= rules.minLength && isValid;
-        }
-        if (rules.maxLength) {
-            isValid = value.trim().length <= rules.minLength && isValid;
-        }
-        if (rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid;
-        }
-        if (rules.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid;
-        }
-
-        return isValid;
     }
 
     orderHandler = (event) => {
