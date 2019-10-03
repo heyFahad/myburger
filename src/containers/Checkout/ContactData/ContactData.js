@@ -7,6 +7,7 @@ import cssClasses from './ContactData.css';
 import Loader from '../../../components/UI/Loader/Loader';
 import axios from '../../../axios-orders';
 import withAxiosErrorHandler from '../../../hoc/withAxiosErrorHandler/withAxiosErrorHandler';
+import { updateObject } from "../../../shared/utility";
 import * as actionCreators from '../../../redux-store/actions/actionCreators';
 
 class ContactData extends Component {
@@ -98,12 +99,14 @@ class ContactData extends Component {
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
-        const updatedOrderForm = { ...this.state.orderForm };
-        const updatedOrderElement = { ...this.state.orderForm[inputIdentifier] };
-        updatedOrderElement.value = event.target.value;
-        updatedOrderElement.valid = this.checkValidity(updatedOrderElement.value, updatedOrderElement.validation);
-        updatedOrderElement.touched = true;
-        updatedOrderForm[inputIdentifier] = updatedOrderElement;
+        const updatedOrderElement = updateObject(this.state.orderForm[inputIdentifier], {
+            value: event.target.value,
+            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            touched: true
+        });
+        const updatedOrderForm = updateObject(this.state.orderForm, {
+            [inputIdentifier]: updatedOrderElement
+        });
 
         let isFormValid = true;
         for (let inputIdentifier in updatedOrderForm) {
